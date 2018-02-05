@@ -109,9 +109,6 @@ Underscoresのベースを変えるのはあんま好きじゃなかけど、、
         ...
     });
     </script>
-    
-### header.php
-	<nav class="navbar navbar-fixed-top navbar-<?php echo get_option( 'color' ); ?>">
 
 説明はここまで。  
 home.phpとかはあえて作らんかった。  
