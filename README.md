@@ -1,45 +1,119 @@
-[![Build Status](https://travis-ci.org/Automattic/_s.svg?branch=master)](https://travis-ci.org/Automattic/_s)
+# Under LTE
 
-_s
-===
+WordPressの標準的なテーマを作ったばい！  
+「Under LTE」とは、**Underscores**と**AdminLTE**を合わせたやつ。  
+早い話、GoogleさんみたいなUIになるとばい！
 
-Hi. I'm a starter theme called `_s`, or `underscores`, if you like. I'm a theme meant for hacking so don't use me as a Parent Theme. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
+### Underscores
+<http://underscores.me/>
 
-My ultra-minimal CSS might make me look like theme tartare but that means less stuff to get in your way when you're designing your awesome theme. Here are some of the other more interesting things you'll find here:
+WordPressの標準的なテーマ。  
+「**Theme Name**」にテーマ名を入れて、「**GENERATE**」ボタンを押すだけ。  
+簡単にテーマの基礎ができあがり！  
 
-* A just right amount of lean, well-commented, modern, HTML5 templates.
-* A helpful 404 template.
-* A custom header implementation in `inc/custom-header.php` just add the code snippet found in the comments of `inc/custom-header.php` to your `header.php` template.
-* Custom template tags in `inc/template-tags.php` that keep your templates clean and neat and prevent code duplication.
-* Some small tweaks in `inc/template-functions.php` that can improve your theming experience.
-* A script at `js/navigation.js` that makes your menu a toggled dropdown on small screens (like your phone), ready for CSS artistry. It's enqueued in `functions.php`.
-* 2 sample CSS layouts in `layouts/` for a sidebar on either side of your content.
-* Smartly organized starter CSS in `style.css` that will help you to quickly get your design off the ground.
-* Licensed under GPLv2 or later. :) Use it to make something cool.
+### AdminLTE2
+<https://adminlte.io/themes/AdminLTE/index2.html>
 
-Getting Started
----------------
+Bootstrapを管理画面のデザインに変えてくれるCSSフレームワーク。  
+書き方はBootstrapとほぼ同じやけん、勉強しなおさんでもよかと。  
+バージョンは2.4を使用。    
 
-If you want to keep it simple, head over to https://underscores.me and generate your `_s` based theme from there. You just input the name of the theme you want to create, click the "Generate" button, and you get your ready-to-awesomize starter theme.
+## Underscoresから修正した内容
 
-If you want to set things up manually, download `_s` from GitHub. The first thing you want to do is copy the `_s` directory and change the name to something else (like, say, `megatherium-is-awesome`), and then you'll need to do a five-step find and replace on the name in all the templates.
+まず、CSSとJSを読み込ませるために「**functions.php**」を変更したと。  
+直接ファイルは入れずに、**CDN**を使っとるけん。  
+あ、ついでに**Font Awesome**も入れてます。  
 
-1. Search for `'_s'` (inside single quotations) to capture the text domain.
-2. Search for `_s_` to capture all the function names.
-3. Search for `Text Domain: _s` in `style.css`.
-4. Search for <code>&nbsp;_s</code> (with a space before it) to capture DocBlocks.
-5. Search for `_s-` to capture prefixed handles.
+### functions.php
+    function under_lte_scripts() {
+        wp_enqueue_style( 'under-lte-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' );
+        wp_enqueue_style( 'under-lte-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
+        wp_enqueue_style( 'under-lte-ionicons', '//cdnjs.cloudflare.com/ajax/libs/ionicons/4.0.0-9/css/ionicons.min.css' );
+        wp_enqueue_style( 'under-lte-adminlte', '//cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/css/AdminLTE.min.css' );
+        wp_enqueue_style( 'under-lte-skin', '//cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/css/skins/_all-skins.min.css' );
+        wp_enqueue_style( 'under-lte-sans', '//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' );
+        wp_enqueue_style( 'under-lte-style', get_stylesheet_uri() );
 
-OR
+        wp_enqueue_script( 'under-lte-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-jquery', '//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-fastclick', '//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-adminlte', '//cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-sparkline', '//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-jvectormap', '//cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.min.js', array(), '20151215', true );
+        wp_enqueue_script( 'under-lte-slimscroll', '//cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js', array(), '20151215', true );    
+        if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+            wp_enqueue_script( 'comment-reply' );
+        }
+    }
 
-1. Search for: `'_s'` and replace with: `'megatherium-is-awesome'`
-2. Search for: `_s_` and replace with: `megatherium_is_awesome_`
-3. Search for: `Text Domain: _s` and replace with: `Text Domain: megatherium-is-awesome` in `style.css`.
-4. Search for: <code>&nbsp;_s</code> and replace with: <code>&nbsp;Megatherium_is_Awesome</code>
-5. Search for: `_s-` and replace with: `megatherium-is-awesome-`
+後は、Bootstrapの書き方の通り「**header.php**」ナビを追加したり、検索フォームのレイアウトを変えるために「**searchform.php**」を追加しとーけんね。（詳細はソースを見てね！）  
+んでね、当然これだけじゃグリッドレイアウトにならんけん、サイドバー（ウィジェット）やメインコンテンツのレイアウトが崩れるったい。 
+Underscoresのベースを変えるのはあんま好きじゃなかけど、、最低限の変更はしとーよ。 
+あと、メニューまで変更するのはしんどかったけん、**footer.php**にjQueryで読み込み後に変更するごとした。
+他のやり方があったら教えてね。  
 
-Then, update the stylesheet header in `style.css`, the links in `footer.php` with your own information and rename `_s.pot` from `languages` folder to use the theme's slug. Next, update or delete this readme.
+### footer.php
+    <script type="text/javascript">
+    $(function(){
+        // Content
+        $('body').addClass('hold-transition fixed sidebar-mini <?php echo get_option( 'color' ); ?>');
+        $('.sidebar-menu > ul > li').unwrap();
+        $('.sidebar-menu > li > a').each(function() {
+            $(this).html('<i class="fa fa-circle-o"></i> <span>' + $(this).text() + '</span>');
+        });
+        $('.navbar-custom-menu ul').addClass('nav navbar-nav');
+        // Add to ...
+    });
+    </script>
 
-Now you're ready to go! The next step is easy to say, but harder to do: make an awesome WordPress theme. :)
+## テーマオプションの追加
 
-Good luck!
+これだけじゃ面白くなかろ？  
+そこで、このテンプレートの目玉！  
+6パターンの色を変更できる「テーマオプション」機能を追加しました！  
+
+管理画面の**「外観」＞「テーマオプション」**として追加したばい！  
+設定画面は「**admin-option.php**」ていうファイル追加したと。  
+ソースはtableタグでベタ書きしとーけん、あんまツッコまんでね...。  
+
+んで、管理画面の設定と値の保存は「functions.php」に書いとるよ。  
+
+### functions.php
+    function under_lte_navswatch() {
+        add_option('color');
+        add_action('admin_menu', 'option_menu_create');
+        function option_menu_create() {
+            add_theme_page(esc_attr__( 'Theme Options' ), esc_attr__( 'Theme Options' ), 'edit_themes', basename(__FILE__), 'option_page_create');
+        }
+        function option_page_create() {
+            $saved = under_lte_save_option();
+            require TEMPLATEPATH.'/admin-option.php';
+        }
+    }
+    function under_lte_save_option() {
+        if (empty($_REQUEST['color'])) return;
+        $save = update_option('color', $_REQUEST['color']);
+        return $save;
+    }
+    add_action('init', 'under_lte_navswatch');
+
+実際に読み込んでいるところはココやけん。  
+
+### functions.php
+    <script type="text/javascript">
+    $(function(){
+        ...
+        $('body').addClass('hold-transition fixed sidebar-mini <?php echo get_option( 'color' ); ?>');
+        ...
+    });
+    </script>
+    
+### header.php
+	<nav class="navbar navbar-fixed-top navbar-<?php echo get_option( 'color' ); ?>">
+
+説明はここまで。  
+home.phpとかはあえて作らんかった。  
+そんなもん固定ページでなんとかなろーもん？  
+まぁ、色々言いたいことあるやろーけど、ベースのテンプレートを作るってことで、これくらいにしとこ。  
