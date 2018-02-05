@@ -36,6 +36,9 @@ $(function(){
 		$(this).html('<i class="fa fa-circle-o"></i> <span>' + $(this).text() + '</span>');
 	});
 	$('.navbar-custom-menu ul').addClass('nav navbar-nav');
+        // Form
+        $('select,textarea,input:not([type=button],[type=submit])').addClass('form-control');
+        $('[type=button],[type=submit]').addClass('btn btn-default');
     // Add to ...
 });
 </script>
