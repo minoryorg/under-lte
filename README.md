@@ -60,10 +60,10 @@ Underscoresのベースを変えるのはあんま好きじゃなかけど、、
         // Content
         $('body').addClass('hold-transition fixed sidebar-mini <?php echo get_option( 'color' ); ?>');
         $('.sidebar-menu > ul > li').unwrap();
-        $('.sidebar-menu > li > a').each(function() {
-            $(this).html('<i class="fa fa-circle-o"></i> <span>' + $(this).text() + '</span>');
-        });
         $('.navbar-custom-menu ul').addClass('nav navbar-nav');
+        // Form
+        $('select,textarea,input:not([type=button],[type=submit])').addClass('form-control');
+        $('[type=button],[type=submit]').addClass('btn btn-default');
         // Add to ...
     });
     </script>
